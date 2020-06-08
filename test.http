@@ -35,3 +35,8 @@ Content-Type: application/json
     "price":180000,
     "stock":90
 }
+
+###
+
+# DELETE a book by id
+DELETE http://localhost:5000/a/v1/books/2

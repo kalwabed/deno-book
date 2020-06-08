@@ -166,4 +166,34 @@ const updateData = async ({ request, response, params }: routerType) => {
     }
 }
 
-export { getAllData, getDatabyId, addData, updateData }
+const deleteData = async ({ response, params, request }: routerType) => {
+    await getDatabyId({ response, params, request })
+    if (response.status === 404) {
+        response.status = 404
+        response.body = {
+            success: false,
+            msg: response.body.msg,
+        }
+        return
+    }
+
+    try {
+        await client.connect()
+        await client.query('DELETE FROM books WHERE id=$1', params.id)
+        response.status = 204
+        response.body = {
+            success: true,
+            msg: `book with id ${params.id} has been deleted!`,
+        }
+    } catch (err) {
+        response.status = 500
+        response.body = {
+            success: false,
+            msg: err.toString(),
+        }
+    } finally {
+        await client.end()
+    }
+}
+
+export { getAllData, getDatabyId, addData, updateData, deleteData }

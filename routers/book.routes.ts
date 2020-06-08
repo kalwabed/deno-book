@@ -4,6 +4,7 @@ import {
     getDatabyId,
     addData,
     updateData,
+    deleteData,
 } from '../controllers/Books.ts'
 const router = new Router({ prefix: '/a/v1/books' })
 
@@ -12,5 +13,6 @@ router
     .get('/:id', getDatabyId)
     .post('/', addData)
     .put('/:id', updateData)
+    .delete('/:id', deleteData)
 
 export default router
